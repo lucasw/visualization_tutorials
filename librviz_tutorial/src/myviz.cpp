@@ -33,6 +33,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 
+#include "rviz/default_plugin/view_controllers/orbit_view_controller.h"
 #include "rviz/visualization_manager.h"
 #include "rviz/render_panel.h"
 #include "rviz/display.h"
@@ -83,6 +84,10 @@ MyViz::MyViz( QWidget* parent )
   manager_->initialize();
   manager_->startUpdate();
 
+  view_ = new rviz::OrbitViewController();
+  view_->initialize(manager_);
+  render_panel_->setViewController(view_);
+
   // Create a Grid display.
   grid_ = manager_->createDisplay( "rviz/Grid", "adjustable grid", true );
   ROS_ASSERT( grid_ != NULL );
@@ -90,6 +95,7 @@ MyViz::MyViz( QWidget* parent )
   // Configure the GridDisplay the way we like it.
   grid_->subProp( "Line Style" )->setValue( "Billboards" );
   grid_->subProp( "Color" )->setValue( QColor( Qt::yellow ) );
+  grid_->subProp( "Offset" )->subProp( "Z" )->setValue(-5.0);
 
   // Initialize the slider values.
   thickness_slider->setValue( 25 );
