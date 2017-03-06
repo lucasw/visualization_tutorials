@@ -86,6 +86,7 @@ MyViz::MyViz( QWidget* parent )
 
   view_ = new rviz::OrbitViewController();
   view_->initialize(manager_);
+  view_->mimic(render_panel_->getViewController());
   render_panel_->setViewController(view_);
 
   // Create a Grid display.
