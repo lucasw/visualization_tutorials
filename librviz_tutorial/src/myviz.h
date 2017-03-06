@@ -30,6 +30,7 @@
 #define MYVIZ_H
 
 #include <QWidget>
+#include <rviz/pluginlib_factory.h>
 #include <rviz/view_controller.h>
 
 namespace rviz
@@ -55,6 +56,7 @@ private Q_SLOTS:
 private:
   rviz::VisualizationManager* manager_;
   rviz::RenderPanel* render_panel_;
+  rviz::PluginlibFactory<rviz::ViewController>* factory_;
   rviz::ViewController* view_;
   rviz::Display* grid_;
 };
