@@ -33,7 +33,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 
-#include "rviz/default_plugin/view_controllers/orbit_view_controller.h"
+#include "rviz/view_manager.h"
 #include "rviz/visualization_manager.h"
 #include "rviz/render_panel.h"
 #include "rviz/display.h"
@@ -84,20 +84,8 @@ MyViz::MyViz( QWidget* parent )
   manager_->initialize();
   manager_->startUpdate();
 
-  // view_ = new rviz::OrbitViewController();
-
-  factory_ = new rviz::PluginlibFactory<rviz::ViewController>("rviz",
-      "rviz::ViewController");
   QString class_id = "rviz/Orbit";
-  // QString class_id = "rviz_ortho_view_controller/Ortho";
-  QString error;
-  view_ = factory_->make(class_id, &error);
-  ROS_INFO_STREAM(error.toStdString());
-
-  view_->initialize(manager_);
-  view_->mimic(render_panel_->getViewController());
-  // view_->transitionFrom(render_panel_->getViewController());
-  render_panel_->setViewController(view_);
+  manager_->getViewManager()->setCurrentViewControllerType(class_id);
 
   // Create a Grid display.
   grid_ = manager_->createDisplay( "rviz/Grid", "adjustable grid", true );
